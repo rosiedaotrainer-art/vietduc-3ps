@@ -729,7 +729,7 @@
 <script>
   // ─── CONFIG ────────────────────────────────────────────────
   // Paste your Google Apps Script Web App URL here after setup
-  const WEBHOOK_URL = https://script.google.com/macros/s/AKfycbw9yCgag0w3XJj2ssvdz05kyXng5cluc2musSQo4SZDCf_SjQbbUeLdQGzk8zGZwlbK/exec;
+  const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbw9yCgag0w3XJj2ssvdz05kyXng5cluc2musSQo4SZDCf_SjQbbUeLdQGzk8zGZwlbK/exec';
   // ───────────────────────────────────────────────────────────
 
   function showToast(msg, duration = 3000) {
@@ -807,24 +807,19 @@
   }
 
   function validateForm() {
-    const required = document.querySelectorAll('[data-required] input[name], [data-required] select[name]');
-    let valid = true;
-    required.forEach(el => {
-      const field = el.closest('.field');
-      if (!el.value || el.value === '') {
-        field.classList.add('has-error');
-        valid = false;
-      } else {
-        field.classList.remove('has-error');
-      }
-    });
-    return valid;
+    const hoTen = document.querySelector('input[name="ho_ten"]');
+    if (!hoTen || !hoTen.value.trim()) {
+      hoTen.closest('.field').classList.add('has-error');
+      hoTen.focus();
+      return false;
+    }
+    hoTen.closest('.field').classList.remove('has-error');
+    return true;
   }
 
   async function submitForm() {
     if (!validateForm()) {
-      showToast('Vui lòng điền đầy đủ các trường bắt buộc (*)');
-      document.querySelector('.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showToast('Vui lòng nhập ít nhất họ tên người cung cấp thông tin');
       return;
     }
 
