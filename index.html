@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khảo sát nhu cầu · Dự án Lương 3Ps · Việt Đức</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f2744;
+    --blue: #1a4a8a;
+    --accent: #c8a84b;
+    --accent-light: #f5e9c8;
+    --surface: #f8f7f4;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e2ddd6;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--accent);
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-mark {
+    width: 42px; height: 42px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark span { font-size: 9px; font-weight: 600; color: var(--navy); text-align: center; line-height: 1.3; }
+  .header-text h1 { font-size: 14px; font-weight: 600; color: var(--white); }
+  .header-text p { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 1px; }
+  .progress-wrap { margin-left: auto; text-align: right; }
+  .progress-label { font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 5px; }
+  .progress-bar { width: 140px; height: 3px; background: rgba(255,255,255,0.15); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+
+  /* MAIN */
+  .main { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  /* INTRO CARD */
+  .intro-card {
+    background: var(--navy);
+    border-radius: 14px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(200,168,75,0.08);
+  }
+  .intro-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--white);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .intro-card h2 span { color: var(--accent); }
+  .intro-card p { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.7; max-width: 560px; }
+  .intro-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .itag {
+    font-size: 11px; font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(200,168,75,0.4);
+    color: var(--accent);
+    background: rgba(200,168,75,0.08);
+  }
+
+  /* SECTION */
+  .section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .section:focus-within { box-shadow: var(--shadow); }
+  .sec-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: #fdfcfa;
+  }
+  .sec-badge {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; flex-shrink: 0;
+  }
+  .ba { background: #dbeafe; color: #1e40af; }
+  .bb { background: #ede9fe; color: #5b21b6; }
+  .bc { background: #d1fae5; color: #065f46; }
+  .bd { background: #fef3c7; color: #92400e; }
+  .be { background: #fee2e2; color: #991b1b; }
+  .bf { background: #f0fdf4; color: #14532d; }
+  .sec-title { font-size: 14px; font-weight: 600; color: var(--navy); }
+  .sec-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .sec-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 18px; }
+
+  /* FIELDS */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 12px; font-weight: 500; color: var(--navy); }
+  .field label .req { color: var(--danger); margin-left: 3px; }
+  .field label .hint { font-size: 11px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+  input[type=text], input[type=number], input[type=email], select, textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 9px 12px;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--surface);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+  input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(26,74,138,0.08);
+    background: var(--white);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  /* RADIO / CHECK */
+  .opts { display: flex; flex-direction: column; gap: 7px; margin-top: 2px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .opt:hover { background: #f0f4ff; border-color: #93b8f0; }
+  .opt input { margin-top: 1px; flex-shrink: 0; accent-color: var(--blue); }
+  .opt.selected { background: #eff6ff; border-color: var(--blue); }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th {
+    background: #f1f5f9;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    color: var(--navy);
+    text-align: left;
+    white-space: nowrap;
+  }
+  th.c { text-align: center; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  td:last-child, th:last-child { border-right: none; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafaf9; }
+  td input[type=number] { width: 90px; text-align: center; }
+  td input[type=text] { min-width: 120px; }
+  td.c { text-align: center; }
+
+  /* DIVIDER */
+  .div { border-top: 1px solid var(--border); margin: 4px -24px; padding: 0 24px; }
+
+  /* SUBMIT */
+  .submit-section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    text-align: center;
+    margin-top: 8px;
+  }
+  .btn-submit {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    padding: 13px 48px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    position: relative;
+  }
+  .btn-submit:hover { background: var(--blue); }
+  .btn-submit:active { transform: scale(0.98); }
+  .btn-submit.loading { opacity: 0.7; pointer-events: none; }
+  .submit-note { font-size: 11px; color: var(--muted); margin-top: 10px; }
+
+  /* SUCCESS */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 24px;
+  }
+  .success-screen.show { display: block; }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: #d1fae5; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+  }
+  .success-screen h2 { font-size: 22px; color: var(--navy); margin-bottom: 10px; }
+  .success-screen p { color: var(--muted); font-size: 14px; }
+
+  /* ERROR */
+  .field-error { font-size: 11px; color: var(--danger); margin-top: 3px; display: none; }
+  .field.has-error input, .field.has-error select, .field.has-error textarea {
+    border-color: var(--danger);
+  }
+  .field.has-error .field-error { display: block; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--navy); color: var(--white);
+    padding: 10px 20px; border-radius: 8px;
+    font-size: 13px; font-weight: 500;
+    opacity: 0; transition: opacity 0.3s;
+    pointer-events: none; z-index: 999;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 600px) {
+    .main { padding: 16px 12px 60px; }
+    .intro-card { padding: 20px; }
+    .g2, .g3 { grid-template-columns: 1fr; }
+    .sec-body { padding: 14px 16px; }
+    .header-inner { padding: 10px 14px; }
+    .progress-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-mark"><span>VIỆT<br>ĐỨC</span></div>
+    <div class="header-text">
+      <h1>Phiếu khảo sát nhu cầu · Dự án Lương 3Ps</h1>
+      <p>Công ty CP Que hàn điện Việt Đức</p>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="prog-label">0 / 6 phần hoàn thành</div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="main" id="form-main">
+
+  <div class="intro-card">
+    <h2>Khảo sát nhu cầu<br><span>hệ thống lương 3Ps</span></h2>
+    <p>Phiếu này được sử dụng bởi đơn vị tư vấn nhằm thu thập đầy đủ thông tin thực trạng, nhu cầu và định hướng của quý công ty. Thông tin được bảo mật và chỉ phục vụ mục đích xây dựng Proposal tư vấn.</p>
+    <div class="intro-tags">
+      <span class="itag">Phỏng vấn 1-1</span>
+      <span class="itag">45–60 phút</span>
+      <span class="itag">Lãnh đạo & HR</span>
+      <span class="itag">Bảo mật hoàn toàn</span>
+    </div>
+  </div>
+
+  <!-- A: THÔNG TIN NGƯỜI CUNG CẤP -->
+  <div class="section" data-section="A">
+    <div class="sec-header">
+      <div class="sec-badge ba">A</div>
+      <div>
+        <div class="sec-title">Thông tin người cung cấp</div>
+        <div class="sec-sub">Xác định góc nhìn và phạm vi thông tin</div>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="g3">
+        <div class="field" data-required>
+          <label>Họ và tên <span class="req">*</span></label>
+          <input type="text" name="ho_ten" placeholder="Nhập họ tên đầy đủ">
+          <span class="field-error">Vui lòng nhập họ tên</span>
+        </div>
+        <div class="field" data-required>
+          <label>Chức danh / Vị trí <span class="req">*</span></label>
+          <input type="text" name="chuc_danh" placeholder="VD: Giám đốc, Trưởng phòng NS...">
+          <span class="field-error">Vui lòng nhập chức danh</span>
+        </div>
+        <div class="field" data-required>
+          <label>Phòng / Ban <span class="req">*</span></label>
+          <select name="phong_ban">
+            <option value="">-- Chọn --</option>
+            <option>Ban Giám đốc</option>
+            <option>Phòng Nhân sự – Hành chính</option>
+            <option>Phòng Kế toán – Tài chính</option>
+            <option>Phòng Kinh doanh</option>
+            <option>Phòng Sản xuất</option>
+            <option>Phòng Kỹ thuật – Chất lượng</option>
+            <option>Phòng Mua hàng – Vật tư</option>
+            <option>Khác</option>
+          </select>
+          <span class="field-error">Vui lòng chọn phòng ban</span>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="field">
+          <label>Thâm niên tại công ty</label>
+          <select name="tham_nien">
+            <option value="">-- Chọn --</option>
+            <option>Dưới 1 năm</option><option>1–3 năm</option>
+            <option>3–5 năm</option><option>5–10 năm</option><option>Trên 10 năm</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Ngày phỏng vấn</label>
+          <input type="text" name="ngay_phong_van" placeholder="VD: 15/04/2026">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B: TỔNG QUAN TỔ CHỨC -->
+  <div class="section" data-section="B">
+    <div class="sec-header">
+      <div class="sec-badge bb">B</div>
+      <div>
+        <div class="sec-title">Tổng quan tổ chức & nhân sự</div>
+        <div class="sec-sub">Hiểu cơ cấu để định hình phạm vi thiết kế</div>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="field">
+        <label>1. Cơ cấu nhân sự theo khối <span class="hint">(ước lượng số lượng)</span></label>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Khối / Bộ phận</th><th class="c">Số người</th><th>Ghi chú</th></tr>
+            <tr><td>Ban Giám đốc</td><td class="c"><input type="number" name="sl_bgd" min="0" placeholder="0"></td><td><input type="text" name="note_bgd" placeholder="..."></td></tr>
+            <tr><td>Quản lý cấp trung</td><td class="c"><input type="number" name="sl_qlct" min="0" placeholder="0"></td><td><input type="text" name="note_qlct" placeholder="..."></td></tr>
+            <tr><td>Khối sản xuất / công nhân</td><td class="c"><input type="number" name="sl_sx" min="0" placeholder="0"></td><td><input type="text" name="note_sx" placeholder="..."></td></tr>
+            <tr><td>Khối kinh doanh</td><td class="c"><input type="number" name="sl_kd" min="0" placeholder="0"></td><td><input type="text" name="note_kd" placeholder="..."></td></tr>
+            <tr><td>Khối văn phòng / hỗ trợ</td><td class="c"><input type="number" name="sl_vp" min="0" placeholder="0"></td><td><input type="text" name="note_vp" placeholder="..."></td></tr>
+            <tr><td>Khối kỹ thuật / R&D</td><td class="c"><input type="number" name="sl_kt" min="0" placeholder="0"></td><td><input type="text" name="note_kt" placeholder="..."></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>2. Số lượng chức danh / vị trí khác nhau hiện tại <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="so_chuc_danh" value="Dưới 20"> Dưới 20 chức danh</label>
+          <label class="opt"><input type="radio" name="so_chuc_danh" value="20–50"> 20–50 chức danh</label>
+          <label class="opt"><input type="radio" name="so_chuc_danh" value="50–100"> 50–100 chức danh</label>
+          <label class="opt"><input type="radio" name="so_chuc_danh" value="Trên 100"> Trên 100 chức danh</label>
+          <label class="opt"><input type="radio" name="so_chuc_danh" value="Chưa thống kê"> Chưa thống kê / không rõ</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>3. Sơ đồ tổ chức chính thức <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="so_do_tc" value="Có đầy đủ"> Có, đầy đủ và cập nhật</label>
+          <label class="opt"><input type="radio" name="so_do_tc" value="Có nhưng sơ sài"> Có nhưng chưa cập nhật / còn sơ sài</label>
+          <label class="opt"><input type="radio" name="so_do_tc" value="Chưa có"> Chưa có, vận hành theo thực tế</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>4. Mô tả công việc (JD) hiện trạng <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="jd_hien_trang" value="Đầy đủ"> Đã có JD đầy đủ cho tất cả vị trí</label>
+          <label class="opt"><input type="radio" name="jd_hien_trang" value="Một phần"> Có một phần, chỉ ở một số vị trí quan trọng</label>
+          <label class="opt"><input type="radio" name="jd_hien_trang" value="Chưa có"> Chưa có JD chính thức</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>5. Đặc thù lao động <span class="hint">(chọn tất cả phù hợp)</span></label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="dac_thu" value="Lao động phổ thông cao"> Tỷ lệ lao động phổ thông / công nhân cao (&gt;50%)</label>
+          <label class="opt"><input type="checkbox" name="dac_thu" value="Kỹ thuật chuyên môn cao"> Nhiều lao động kỹ thuật chuyên môn cao</label>
+          <label class="opt"><input type="checkbox" name="dac_thu" value="Kinh doanh hoa hồng"> Đội ngũ kinh doanh hưởng hoa hồng / doanh số</label>
+          <label class="opt"><input type="checkbox" name="dac_thu" value="Lao động theo ca"> Lao động theo ca / theo kíp sản xuất</label>
+          <label class="opt"><input type="checkbox" name="dac_thu" value="Lao động thời vụ"> Có lao động thời vụ hoặc hợp đồng ngắn hạn</label>
+          <label class="opt"><input type="checkbox" name="dac_thu" value="Văn phòng đa số"> Lao động văn phòng hành chính chiếm đa số</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C: THỰC TRẠNG LƯƠNG -->
+  <div class="section" data-section="C">
+    <div class="sec-header">
+      <div class="sec-badge bc">C</div>
+      <div>
+        <div class="sec-title">Thực trạng hệ thống lương hiện tại</div>
+        <div class="sec-sub">Nắm bức tranh xuất phát điểm</div>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="field">
+        <label>6. Hình thức trả lương hiện tại <span class="hint">(chọn tất cả đang áp dụng)</span></label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="hinh_thuc_luong" value="Lương cơ bản cố định"> Lương cơ bản cố định theo tháng</label>
+          <label class="opt"><input type="checkbox" name="hinh_thuc_luong" value="Lương theo sản phẩm"> Lương theo sản phẩm / sản lượng</label>
+          <label class="opt"><input type="checkbox" name="hinh_thuc_luong" value="Lương theo doanh số"> Lương theo doanh số / hoa hồng kinh doanh</label>
+          <label class="opt"><input type="checkbox" name="hinh_thuc_luong" value="Lương cơ bản + KPI"> Lương cơ bản + thưởng KPI</label>
+          <label class="opt"><input type="checkbox" name="hinh_thuc_luong" value="Theo thỏa thuận cá nhân"> Lương theo thỏa thuận cá nhân (không theo hệ thống)</label>
+          <label class="opt"><input type="checkbox" name="hinh_thuc_luong" value="Chưa có cơ chế rõ"> Chưa có cơ chế rõ ràng, trả theo cảm tính</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>7. Thang bảng lương đăng ký nhà nước <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="thang_bang_luong" value="Có và đúng"> Có, đã đăng ký và đang áp dụng đúng</label>
+          <label class="opt"><input type="radio" name="thang_bang_luong" value="Có nhưng sai thực tế"> Có nhưng áp dụng không đúng thực tế</label>
+          <label class="opt"><input type="radio" name="thang_bang_luong" value="Chưa có"> Chưa có / chưa đăng ký</label>
+          <label class="opt"><input type="radio" name="thang_bang_luong" value="Không biết"> Không biết</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>8. Mức lương so với thị trường cùng ngành <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="luong_vs_tt" value="Cao hơn"> Cao hơn thị trường</label>
+          <label class="opt"><input type="radio" name="luong_vs_tt" value="Ngang bằng"> Ngang thị trường</label>
+          <label class="opt"><input type="radio" name="luong_vs_tt" value="Thấp hơn"> Thấp hơn thị trường</label>
+          <label class="opt"><input type="radio" name="luong_vs_tt" value="Chưa tham chiếu"> Chưa từng tham chiếu thị trường</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>9. Vấn đề nổi cộm nhất về lương hiện tại <span class="hint">(chọn tất cả phù hợp)</span></label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="van_de_luong" value="Thiếu công bằng nội bộ"> Thiếu công bằng nội bộ giữa các vị trí</label>
+          <label class="opt"><input type="checkbox" name="van_de_luong" value="Không gắn hiệu quả"> Không gắn với hiệu quả / kết quả công việc</label>
+          <label class="opt"><input type="checkbox" name="van_de_luong" value="Khó tuyển dụng"> Khó tuyển dụng vì lương không cạnh tranh</label>
+          <label class="opt"><input type="checkbox" name="van_de_luong" value="Nhân tài nghỉ việc"> Nhân tài / nhân viên giỏi thường xuyên nghỉ việc</label>
+          <label class="opt"><input type="checkbox" name="van_de_luong" value="Không có lộ trình tăng"> Lương tăng không theo lộ trình rõ ràng</label>
+          <label class="opt"><input type="checkbox" name="van_de_luong" value="Xung đột nội bộ"> Xung đột nội bộ do chênh lệch lương bất hợp lý</label>
+          <label class="opt"><input type="checkbox" name="van_de_luong" value="Chi phí mất kiểm soát"> Chi phí nhân sự vượt ngân sách, khó kiểm soát</label>
+          <label class="opt"><input type="checkbox" name="van_de_luong" value="Muốn hệ thống hóa"> Không có vấn đề lớn, muốn hệ thống hóa lại</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>10. Mô tả thêm khó khăn lương thưởng cụ thể</label>
+        <textarea name="kho_khan_luong" placeholder="Ví dụ: công nhân phàn nàn lương thấp hơn công ty lân cận, nhân viên kinh doanh không có động lực vì lương cứng quá cao..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- D: ĐỊNH HƯỚNG 3PS -->
+  <div class="section" data-section="D">
+    <div class="sec-header">
+      <div class="sec-badge bd">D</div>
+      <div>
+        <div class="sec-title">Định hướng & mong muốn hệ thống 3Ps</div>
+        <div class="sec-sub">Xác định đầu ra cần thiết kế</div>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="field">
+        <label>11. Mục tiêu ưu tiên khi xây dựng 3Ps <span class="hint">(xếp thứ tự ưu tiên: 1 = quan trọng nhất)</span></label>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Mục tiêu</th><th class="c">Ưu tiên (1–5)</th></tr>
+            <tr><td>Đảm bảo công bằng nội bộ giữa các vị trí</td><td class="c"><select name="p_cong_bang"><option>--</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+            <tr><td>Gắn lương với hiệu quả cá nhân / KPI</td><td class="c"><select name="p_kpi"><option>--</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+            <tr><td>Cạnh tranh thị trường, giữ chân nhân tài</td><td class="c"><select name="p_thi_truong"><option>--</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+            <tr><td>Kiểm soát & tối ưu chi phí nhân sự</td><td class="c"><select name="p_chi_phi"><option>--</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+            <tr><td>Tạo lộ trình tăng lương minh bạch</td><td class="c"><select name="p_lo_trinh"><option>--</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>12. Tỷ lệ cơ cấu lương mong muốn <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="co_cau_luong" value="Lương cứng 80-90%"> Lương cứng cao (80–90%), thưởng ít — ổn định, an toàn</label>
+          <label class="opt"><input type="radio" name="co_cau_luong" value="Lương cứng 60-70%"> Lương cứng vừa (60–70%), thưởng KPI đáng kể — cân bằng</label>
+          <label class="opt"><input type="radio" name="co_cau_luong" value="Lương cứng 40-50%"> Lương cứng thấp (40–50%), thưởng hiệu quả cao — động lực mạnh</label>
+          <label class="opt"><input type="radio" name="co_cau_luong" value="Khác nhau theo khối"> Khác nhau tùy từng khối / vị trí</label>
+          <label class="opt"><input type="radio" name="co_cau_luong" value="Cần tư vấn"> Chưa có ý kiến, cần tư vấn</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>13. Phạm vi áp dụng hệ thống 3Ps <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="pham_vi" value="Toàn công ty"> Toàn bộ công ty (tất cả khối)</label>
+          <label class="opt"><input type="radio" name="pham_vi" value="Ưu tiên sản xuất"> Ưu tiên khối sản xuất trước</label>
+          <label class="opt"><input type="radio" name="pham_vi" value="Ưu tiên kinh doanh"> Ưu tiên khối kinh doanh trước</label>
+          <label class="opt"><input type="radio" name="pham_vi" value="Quản lý trước"> Chỉ cấp quản lý trước, nhân viên sau</label>
+          <label class="opt"><input type="radio" name="pham_vi" value="Cần thảo luận"> Cần thảo luận thêm</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>14. Phúc lợi hiện tại ngoài lương <span class="hint">(chọn tất cả đang có)</span></label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="phuc_loi" value="BHXH/BHYT/BHTN"> BHXH / BHYT / BHTN theo luật</label>
+          <label class="opt"><input type="checkbox" name="phuc_loi" value="Thưởng tháng 13"> Thưởng tháng 13 / thưởng Tết</label>
+          <label class="opt"><input type="checkbox" name="phuc_loi" value="Phụ cấp ăn/đi lại"> Phụ cấp ăn trưa / đi lại / điện thoại</label>
+          <label class="opt"><input type="checkbox" name="phuc_loi" value="Hỗ trợ nhà ở"> Hỗ trợ nhà ở / ký túc xá</label>
+          <label class="opt"><input type="checkbox" name="phuc_loi" value="Bảo hiểm sức khỏe bổ sung"> Bảo hiểm sức khỏe bổ sung (PVI, Bảo Việt…)</label>
+          <label class="opt"><input type="checkbox" name="phuc_loi" value="Thưởng hiệu quả/dự án"> Thưởng hiệu quả / thưởng dự án</label>
+          <label class="opt"><input type="checkbox" name="phuc_loi" value="Đào tạo/học bổng"> Chế độ đào tạo / học bổng</label>
+          <label class="opt"><input type="checkbox" name="phuc_loi" value="Chưa có nhiều"> Chưa có nhiều phúc lợi ngoài lương cơ bản</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E: NĂNG LỰC & ĐÁNH GIÁ -->
+  <div class="section" data-section="E">
+    <div class="sec-header">
+      <div class="sec-badge be">E</div>
+      <div>
+        <div class="sec-title">Năng lực & đánh giá hiệu quả</div>
+        <div class="sec-sub">Nền tảng cho P2 (Pay for Person) và P3 (Pay for Performance)</div>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="field">
+        <label>15. Hệ thống đánh giá hiệu quả công việc hiện tại <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="he_thong_dg" value="KPI bài bản"> Có hệ thống KPI bài bản, đang vận hành tốt</label>
+          <label class="opt"><input type="radio" name="he_thong_dg" value="Có nhưng chưa đồng bộ"> Có nhưng chưa đồng bộ, áp dụng không đều</label>
+          <label class="opt"><input type="radio" name="he_thong_dg" value="Cảm tính"> Có đánh giá nhưng mang tính cảm tính, chưa có tiêu chí rõ</label>
+          <label class="opt"><input type="radio" name="he_thong_dg" value="Chưa có"> Chưa có hệ thống đánh giá nào</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>16. Tần suất đánh giá hiệu quả hiện tại</label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="tan_suat_dg" value="Hàng tháng"> Hàng tháng</label>
+          <label class="opt"><input type="radio" name="tan_suat_dg" value="Hàng quý"> Hàng quý</label>
+          <label class="opt"><input type="radio" name="tan_suat_dg" value="6 tháng/năm"> 6 tháng / năm</label>
+          <label class="opt"><input type="radio" name="tan_suat_dg" value="Khi có vấn đề"> Chỉ khi có vấn đề phát sinh</label>
+          <label class="opt"><input type="radio" name="tan_suat_dg" value="Chưa có định kỳ"> Chưa có đánh giá định kỳ</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>17. Năng lực cốt lõi quan trọng nhất với Việt Đức <span class="hint">(chọn tối đa 4)</span></label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="nang_luc" value="Kỹ thuật sản xuất/hàn"> Kỹ thuật chuyên môn sản xuất / hàn</label>
+          <label class="opt"><input type="checkbox" name="nang_luc" value="Kỹ năng bán hàng"> Kỹ năng bán hàng & chăm sóc khách hàng</label>
+          <label class="opt"><input type="checkbox" name="nang_luc" value="Tư duy cải tiến"> Tư duy cải tiến / giải quyết vấn đề</label>
+          <label class="opt"><input type="checkbox" name="nang_luc" value="Kỷ luật & tuân thủ"> Kỷ luật & tuân thủ quy trình</label>
+          <label class="opt"><input type="checkbox" name="nang_luc" value="Lãnh đạo & phát triển nhóm"> Lãnh đạo & phát triển đội nhóm</label>
+          <label class="opt"><input type="checkbox" name="nang_luc" value="Chất lượng & độ chính xác"> Chất lượng công việc & độ chính xác</label>
+          <label class="opt"><input type="checkbox" name="nang_luc" value="Trách nhiệm & cam kết"> Tinh thần trách nhiệm & cam kết</label>
+          <label class="opt"><input type="checkbox" name="nang_luc" value="Ngoại ngữ / đối tác nước ngoài"> Kỹ năng ngoại ngữ / làm việc với đối tác nước ngoài</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>18. Cơ sở quyết định tăng lương hiện tại <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="co_so_tang_luong" value="Thâm niên"> Theo thâm niên / số năm công tác</label>
+          <label class="opt"><input type="radio" name="co_so_tang_luong" value="Kết quả đánh giá"> Theo kết quả đánh giá hiệu quả</label>
+          <label class="opt"><input type="radio" name="co_so_tang_luong" value="Đề xuất quản lý"> Theo đề xuất của quản lý trực tiếp</label>
+          <label class="opt"><input type="radio" name="co_so_tang_luong" value="Ngân sách đồng loạt"> Theo ngân sách hàng năm, tăng đồng loạt</label>
+          <label class="opt"><input type="radio" name="co_so_tang_luong" value="Nhân viên yêu cầu/đe dọa nghỉ"> Khi nhân viên yêu cầu / đe dọa nghỉ việc</label>
+          <label class="opt"><input type="radio" name="co_so_tang_luong" value="Chưa có quy trình"> Chưa có quy trình tăng lương rõ ràng</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- F: ĐIỀU KIỆN TRIỂN KHAI -->
+  <div class="section" data-section="F">
+    <div class="sec-header">
+      <div class="sec-badge bf">F</div>
+      <div>
+        <div class="sec-title">Điều kiện triển khai & kỳ vọng dự án</div>
+        <div class="sec-sub">Xác định nguồn lực, ràng buộc và mong đợi</div>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="field">
+        <label>19. Ngân sách dự kiến đầu tư cho dự án tư vấn <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="ngan_sach" value="Dưới 100tr"> Dưới 100 triệu đồng</label>
+          <label class="opt"><input type="radio" name="ngan_sach" value="100–300tr"> 100 – 300 triệu đồng</label>
+          <label class="opt"><input type="radio" name="ngan_sach" value="300–500tr"> 300 – 500 triệu đồng</label>
+          <label class="opt"><input type="radio" name="ngan_sach" value="Trên 500tr"> Trên 500 triệu đồng</label>
+          <label class="opt"><input type="radio" name="ngan_sach" value="Chưa xác định"> Chưa xác định, dựa vào đề xuất tư vấn</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>20. Người ra quyết định cuối cùng về hệ thống lương <span class="req">*</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="nguoi_quyet_dinh" value="TGĐ/Chủ tịch HĐQT"> Tổng Giám đốc / Chủ tịch HĐQT</label>
+          <label class="opt"><input type="radio" name="nguoi_quyet_dinh" value="HĐQT tập thể"> Hội đồng quản trị (họp và phê duyệt tập thể)</label>
+          <label class="opt"><input type="radio" name="nguoi_quyet_dinh" value="Giám đốc NS/HR"> Giám đốc Nhân sự / HR Director</label>
+          <label class="opt"><input type="radio" name="nguoi_quyet_dinh" value="Ban lãnh đạo thống nhất"> Ban lãnh đạo thống nhất chung</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>21. Mức độ sẵn sàng thay đổi</label>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Đối tượng</th><th class="c">Rất thấp</th><th class="c">Thấp</th><th class="c">Trung bình</th><th class="c">Cao</th><th class="c">Rất cao</th></tr>
+            <tr>
+              <td>Ban Giám đốc</td>
+              <td class="c"><input type="radio" name="change_bgd" value="1"></td>
+              <td class="c"><input type="radio" name="change_bgd" value="2"></td>
+              <td class="c"><input type="radio" name="change_bgd" value="3"></td>
+              <td class="c"><input type="radio" name="change_bgd" value="4"></td>
+              <td class="c"><input type="radio" name="change_bgd" value="5"></td>
+            </tr>
+            <tr>
+              <td>Quản lý cấp trung</td>
+              <td class="c"><input type="radio" name="change_qlct" value="1"></td>
+              <td class="c"><input type="radio" name="change_qlct" value="2"></td>
+              <td class="c"><input type="radio" name="change_qlct" value="3"></td>
+              <td class="c"><input type="radio" name="change_qlct" value="4"></td>
+              <td class="c"><input type="radio" name="change_qlct" value="5"></td>
+            </tr>
+            <tr>
+              <td>Nhân viên / Công nhân</td>
+              <td class="c"><input type="radio" name="change_nv" value="1"></td>
+              <td class="c"><input type="radio" name="change_nv" value="2"></td>
+              <td class="c"><input type="radio" name="change_nv" value="3"></td>
+              <td class="c"><input type="radio" name="change_nv" value="4"></td>
+              <td class="c"><input type="radio" name="change_nv" value="5"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>22. Tài liệu có thể cung cấp cho đơn vị tư vấn <span class="hint">(chọn tất cả có thể cung cấp)</span></label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="tai_lieu" value="Sơ đồ tổ chức"> Sơ đồ tổ chức hiện tại</label>
+          <label class="opt"><input type="checkbox" name="tai_lieu" value="Danh sách chức danh"> Danh sách vị trí / chức danh công việc</label>
+          <label class="opt"><input type="checkbox" name="tai_lieu" value="JD hiện có"> Mô tả công việc (JD) hiện có</label>
+          <label class="opt"><input type="checkbox" name="tai_lieu" value="Thang bảng lương"> Thang bảng lương đang áp dụng</label>
+          <label class="opt"><input type="checkbox" name="tai_lieu" value="Dữ liệu lương ẩn danh"> Dữ liệu lương hiện tại của nhân viên (ẩn danh)</label>
+          <label class="opt"><input type="checkbox" name="tai_lieu" value="Kết quả đánh giá KPI"> Kết quả đánh giá hiệu quả các năm trước</label>
+          <label class="opt"><input type="checkbox" name="tai_lieu" value="Chiến lược kinh doanh"> Chiến lược kinh doanh / kế hoạch 3–5 năm</label>
+          <label class="opt"><input type="checkbox" name="tai_lieu" value="Quy chế lương thưởng"> Quy chế lương thưởng nội bộ hiện hành</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>23. Kỳ vọng lớn nhất khi hoàn thành dự án</label>
+        <textarea name="ky_vong" placeholder="Ví dụ: có hệ thống lương rõ ràng để nhân viên tin tưởng, giảm khiếu nại về lương, thu hút được kỹ sư giỏi..."></textarea>
+      </div>
+
+      <div class="field">
+        <label>24. Điều lo ngại nhất khi triển khai hệ thống lương mới</label>
+        <textarea name="lo_ngai" placeholder="Ví dụ: nhân viên phản ứng tiêu cực, chi phí lương tăng đột biến, mất nhân sự chủ chốt..."></textarea>
+      </div>
+
+      <div class="field">
+        <label>25. Thông tin / ý kiến khác muốn chia sẻ</label>
+        <textarea name="y_kien_khac" placeholder="Nhập tự do..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-section" id="submit-section">
+    <button class="btn-submit" id="btn-submit" onclick="submitForm()">
+      Gửi phiếu khảo sát
+    </button>
+    <p class="submit-note">Dữ liệu sẽ được ghi nhận vào hệ thống và bảo mật hoàn toàn.<br>Sau khi gửi, đơn vị tư vấn sẽ liên hệ để xác nhận và hẹn buổi phỏng vấn sâu hơn.</p>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">✓</div>
+    <h2>Cảm ơn quý công ty!</h2>
+    <p>Phiếu khảo sát đã được ghi nhận thành công.<br>Đơn vị tư vấn sẽ liên hệ trong vòng <strong>1–2 ngày làm việc</strong>.</p>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ─── CONFIG ────────────────────────────────────────────────
+  // Paste your Google Apps Script Web App URL here after setup
+  const WEBHOOK_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+  // ───────────────────────────────────────────────────────────
+
+  function showToast(msg, duration = 3000) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  // Progress tracker
+  function updateProgress() {
+    const sections = document.querySelectorAll('.section');
+    let filled = 0;
+    sections.forEach(sec => {
+      const inputs = sec.querySelectorAll('input:not([type=radio]):not([type=checkbox]), select, textarea');
+      const radios = sec.querySelectorAll('input[type=radio]:checked');
+      const checks = sec.querySelectorAll('input[type=checkbox]:checked');
+      if (inputs.length > 0) {
+        const hasText = Array.from(inputs).some(i => i.value.trim() !== '' && i.value !== '-- Chọn --');
+        if (hasText || radios.length > 0 || checks.length > 0) filled++;
+      } else {
+        if (radios.length > 0 || checks.length > 0) filled++;
+      }
+    });
+    const pct = Math.round((filled / sections.length) * 100);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-label').textContent = filled + ' / ' + sections.length + ' phần hoàn thành';
+  }
+
+  document.addEventListener('input', updateProgress);
+  document.addEventListener('change', updateProgress);
+
+  // Opt selection highlight
+  document.querySelectorAll('.opt').forEach(opt => {
+    const inp = opt.querySelector('input');
+    inp.addEventListener('change', () => {
+      if (inp.type === 'radio') {
+        const name = inp.name;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+          r.closest('.opt').classList.remove('selected');
+        });
+      }
+      opt.classList.toggle('selected', inp.checked);
+    });
+  });
+
+  // Collect all form data
+  function collectData() {
+    const data = { timestamp: new Date().toISOString() };
+
+    // Text / select / textarea
+    document.querySelectorAll('input[name], select[name], textarea[name]').forEach(el => {
+      if (el.type === 'radio' || el.type === 'checkbox') return;
+      if (el.name && el.value && el.value !== '--') {
+        data[el.name] = el.value.trim();
+      }
+    });
+
+    // Radio
+    document.querySelectorAll('input[type=radio]:checked').forEach(el => {
+      data[el.name] = el.value;
+    });
+
+    // Checkbox (group by name)
+    const cbGroups = {};
+    document.querySelectorAll('input[type=checkbox]').forEach(el => {
+      if (!cbGroups[el.name]) cbGroups[el.name] = [];
+      if (el.checked) cbGroups[el.name].push(el.value);
+    });
+    Object.entries(cbGroups).forEach(([k, v]) => {
+      data[k] = v.join('; ');
+    });
+
+    return data;
+  }
+
+  function validateForm() {
+    const required = document.querySelectorAll('[data-required] input[name], [data-required] select[name]');
+    let valid = true;
+    required.forEach(el => {
+      const field = el.closest('.field');
+      if (!el.value || el.value === '') {
+        field.classList.add('has-error');
+        valid = false;
+      } else {
+        field.classList.remove('has-error');
+      }
+    });
+    return valid;
+  }
+
+  async function submitForm() {
+    if (!validateForm()) {
+      showToast('Vui lòng điền đầy đủ các trường bắt buộc (*)');
+      document.querySelector('.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = document.getElementById('btn-submit');
+    btn.classList.add('loading');
+    btn.textContent = 'Đang gửi...';
+
+    const data = collectData();
+
+    // Log data to console (for dev/testing)
+    console.log('Form data:', JSON.stringify(data, null, 2));
+
+    // Send to Google Sheet via webhook
+    if (WEBHOOK_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      try {
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } catch (e) {
+        console.error('Webhook error:', e);
+      }
+    }
+
+    // Show success
+    document.getElementById('form-main').style.display = 'none';
+    document.getElementById('success-screen').classList.add('show');
+    document.getElementById('success-screen').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
